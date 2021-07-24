@@ -78,8 +78,8 @@ public class AuthenticationController {
     }
 
     @PostMapping(path = "/validate")
-    public TokenResponse validate(@Valid @RequestBody JWTTokenRequest request){
-        return userService.validate(request);
+    public TokenResponse validate(@Valid @RequestParam String token){
+        return userService.validate(token);
     }
 
 }

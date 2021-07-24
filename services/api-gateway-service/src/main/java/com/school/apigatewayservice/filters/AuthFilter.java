@@ -1,20 +1,22 @@
 package com.school.apigatewayservice.filters;
 
 import com.school.apigatewayservice.dto.TokenResponse;
-import com.school.apigatewayservice.dto.ValidateJWT;
-import com.school.apigatewayservice.proxy.AuthProxy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 @Component
 public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> {
 
-    @Autowired
-    private  AuthProxy authProxy;
+    private final RestTemplate restTemplate;
+
+    public AuthFilter(RestTemplate restTemplate) {
+        super(Config.class);
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public GatewayFilter apply(Config config) {
@@ -31,9 +33,10 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                 throw new RuntimeException("Incorrect authorization structure");
             }
             ServerHttpRequest.Builder builder = exchange.getRequest().mutate();
-            TokenResponse response = authProxy.validateToken(new ValidateJWT(parts[1]));
-            if(response!=null) {
-                builder.header("X-auth-user-id", String.valueOf(response.getUserId()));
+            TokenResponse userDto = restTemplate.getForObject(String.format("%s//validateToken?token=%s",
+                    "authentication-service", parts[1]), TokenResponse.class);
+            if(userDto!=null) {
+                builder.header("X-auth-user-id", String.valueOf(userDto.getUserId()));
             }else{
                 throw new RuntimeException("Login failed");
             }

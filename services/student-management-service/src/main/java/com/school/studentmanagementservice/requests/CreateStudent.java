@@ -21,7 +21,6 @@ public class CreateStudent {
     private String firstName;
     private String lastName;
     private String middleName;
-    @NotEmpty(message = "Date of birth  should not be empty")
     @NotNull(message = "Date of birth  should not be null")
     private LocalDate dateOfBirth;
     @NotEmpty(message = "Gender should not be empty")

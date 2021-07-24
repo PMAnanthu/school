@@ -59,8 +59,7 @@ public class UserService {
     }
 
 
-    public TokenResponse validate(JWTTokenRequest request) {
-        final String token=request.getJwt().substring(7);
+    public TokenResponse validate(String token) {
         String userName=jwtUtil.extractUserName(token);
         LoginUser user = iUserRepo.findByUserName(userName);
         if(jwtUtil.validateToken(token,user)){

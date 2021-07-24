@@ -32,36 +32,36 @@ public class StudentResources {
     }
 
 
-    @GetMapping("/v1/students/{id}")
+    @GetMapping("/students/{id}")
     public StudentResponse getStudent(@PathVariable String id) throws UserNotFountException {
         return studentService.getStudent(id);
     }
 
 
-    @GetMapping(path = "/v1/students/filter")
+    @GetMapping(path = "/students/filter")
     public List<StudentResponse> getAllStudentByFilter(@RequestParam String field,
                                                        @RequestParam String value)
             throws NotValidInputException {
         return studentService.getAllStudentByFilter(field, value);
     }
 
-    @PostMapping("/v1/students/")
+    @PostMapping("/students")
     public ResponseEntity<String> insertStudent(@Valid @RequestBody CreateStudent createStudent) {
         return ResponseEntity.ok(studentService.insertStudent( createStudent));
 
     }
 
-    @PostMapping( "/v1/students/load")
+    @PostMapping( "/students/load")
     public ResponseEntity<String> loadStudents(@Valid @RequestBody LoadStudent loadStudent) {
         return ResponseEntity.ok(studentService.loadStudents(loadStudent));
     }
 
-    @PutMapping("/v1/students/")
+    @PutMapping("/students/")
     public ResponseEntity<String> updateStudent(@Valid @RequestBody UpdateStudent updateStudent) {
         return ResponseEntity.ok(studentService.updateStudent(updateStudent));
     }
 
-    @DeleteMapping("/v1/students/{id}")
+    @DeleteMapping("/students/{id}")
     public ResponseEntity<String> updateStatus(@PathVariable String id,
                                                @RequestParam boolean status) throws UserNotFountException {
         return ResponseEntity.ok(studentService.updateStatus(id, status));

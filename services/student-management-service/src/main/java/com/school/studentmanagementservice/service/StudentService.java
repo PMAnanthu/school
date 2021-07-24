@@ -52,9 +52,9 @@ public class StudentService {
         student.setActive(true);
         student = iStudentRepo.save(student);
         if (student.getUuid() != null) {
-            return "Student created successfully";
+            return student.getUuid().toString();
         }
-        return "Student creation failed";
+        return null;
     }
 
 
