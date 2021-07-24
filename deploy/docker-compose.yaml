@@ -1,0 +1,76 @@
+version: '3.7'
+
+services:
+
+    db:
+        image: postgres:latest
+        ports:
+            - "5432:5432"
+        restart: always
+        environment:
+            POSTGRES_DB: dev_01
+            POSTGRES_USER: postgresql
+            POSTGRES_PASSWORD: Password
+        networks:
+            - school-network
+
+    naming-server:
+        image: pmananthu/eureka-naming-server:0.0.1
+        ports:
+            - "8761:8761"
+        environment:
+            PROFILE: prod
+        networks:
+            - school-network
+            
+    hystrix-dashboard:
+        image: pmananthu/hystrix-dashboard:0.0.1
+        ports:
+            - "8300:8300"
+        environment:
+            PROFILE: prod
+        networks:
+            - school-network
+        depends_on: 
+            - naming-server
+
+    api-gateway-service:
+        image: pmananthu/api-gateway-service:0.0.1
+        ports:
+            - "8000:8000"
+        environment:
+            PROFILE: prod
+        networks:
+            - school-network
+        depends_on: 
+            - naming-server
+
+    authentication-service:
+        image: pmananthu/authentication-service:0.0.1
+        ports:
+            - "8100:8100"
+        links:
+            - "db:db"
+        environment:
+            PROFILE: prod
+        networks:
+            - school-network
+        depends_on: 
+            - naming-server
+            - db
+
+    notification-service:
+        image: pmananthu/notification-service:0.0.1
+        ports:
+            - "8200:8200"
+            - "587:587"
+        environment:
+            PROFILE: prod
+        networks:
+            - school-network
+        depends_on: 
+            - naming-server
+
+
+networks:
+    school-network:
