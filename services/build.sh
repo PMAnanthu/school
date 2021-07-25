@@ -14,3 +14,6 @@ cd ..
 cd notification-service/
 ./gradlew clean build buildDocker pushDocker -i
 cd ..
+cd user-management-service/
+./gradlew clean build buildDocker pushDocker -i
+cd ..
