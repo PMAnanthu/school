@@ -14,8 +14,6 @@ services:
             PGDATA: /var/lib/postgresql/data/pgdata
         networks:
             - school-network
-        volumes:
-            - ./../../data:/var/lib/postgresql/data/pgdata
         healthcheck:
             test: ["CMD-SHELL", "pg_isready -U postgresql"]
             interval: 5s
@@ -30,11 +28,15 @@ services:
             PROFILE: prod
         networks:
             - school-network
+        depends_on: 
+            - db
             
     hystrix-dashboard:
         image: pmananthu/hystrix-dashboard:0.0.1
         ports:
             - "8300:8300"
+        links: 
+            - "naming-server:naming-server"
         environment:
             PROFILE: prod
         networks:
@@ -46,6 +48,8 @@ services:
         image: pmananthu/api-gateway-service:0.1.1
         ports:
             - "8765:8765"
+        links: 
+            - "naming-server:naming-server"
         environment:
             PROFILE: prod
         networks:
@@ -58,6 +62,7 @@ services:
         ports:
             - "8100:8100"
         links:
+            - "naming-server:naming-server"
             - "db:db"
         environment:
             PROFILE: prod
@@ -74,6 +79,8 @@ services:
             - "587:587"
         environment:
             PROFILE: prod
+        links:
+            - "naming-server:naming-server"
         networks:
             - school-network
         depends_on: 
@@ -84,6 +91,7 @@ services:
         ports:
             - "8400:8400"
         links:
+            - "naming-server:naming-server"
             - "db:db"
         environment:
             PROFILE: prod
@@ -98,6 +106,7 @@ services:
         ports:
             - "8500:8500"
         links:
+            - "naming-server:naming-server"
             - "db:db"
         environment:
             PROFILE: prod
