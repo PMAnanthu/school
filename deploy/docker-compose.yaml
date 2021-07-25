@@ -15,7 +15,7 @@ services:
             - school-network
 
     naming-server:
-        image: pmananthu/eureka-naming-server:0.0.1
+        image: pmananthu/eureka-naming-server:0.1.0
         ports:
             - "8761:8761"
         environment:
@@ -35,9 +35,9 @@ services:
             - naming-server
 
     api-gateway-service:
-        image: pmananthu/api-gateway-service:0.0.1
+        image: pmananthu/api-gateway-service:0.1.0
         ports:
-            - "8000:8000"
+            - "8765:8765"
         environment:
             PROFILE: prod
         networks:
@@ -46,7 +46,7 @@ services:
             - naming-server
 
     authentication-service:
-        image: pmananthu/authentication-service:0.0.1
+        image: pmananthu/authentication-service:0.1.0
         ports:
             - "8100:8100"
         links:
@@ -60,7 +60,7 @@ services:
             - db
 
     notification-service:
-        image: pmananthu/notification-service:0.0.1
+        image: pmananthu/notification-service:0.1.0
         ports:
             - "8200:8200"
             - "587:587"
@@ -70,6 +70,20 @@ services:
             - school-network
         depends_on: 
             - naming-server
+
+    user-management-service:
+        image: pmananthu/user-management-service:0.0.1
+        ports:
+            - "8400:8400"
+        links:
+            - "db:db"
+        environment:
+            PROFILE: prod
+        networks:
+            - school-network
+        depends_on: 
+            - naming-server
+            - db
 
 
 networks:
