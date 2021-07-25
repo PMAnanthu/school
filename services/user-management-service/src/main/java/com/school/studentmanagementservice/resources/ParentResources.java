@@ -41,7 +41,7 @@ public class ParentResources {
 
     @PostMapping("/parents")
     public ResponseEntity<String> insertStaff(@Valid @RequestBody CreateParent createParent) {
-        return ResponseEntity.ok(parentService.insertStaff( createParent));
+        return ResponseEntity.ok(parentService.insertParent(createParent));
     }
 
 }

@@ -41,7 +41,7 @@ public class ParentService {
         return parent;
     }
 
-    public String insertStaff(CreateParent createParent) {
+    public String insertParent(CreateParent createParent) {
         UserMapping userMapping = new UserMapping();
         try {
             userMapping.setUserType(UserType.PARENT);

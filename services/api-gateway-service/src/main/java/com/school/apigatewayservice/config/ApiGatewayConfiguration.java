@@ -83,9 +83,9 @@ public class ApiGatewayConfiguration<RouterValidator> {
     }
 
     private void populateRequestWithHeaders(ServerWebExchange exchange, String token) {
-        String userName = jwtUtil.extractUserName(token);
+        String userId = jwtUtil.extractUserId(token);
         exchange.getRequest().mutate()
-                .header("userName", userName)
+                .header("userId", userId)
                 .build();
     }
 

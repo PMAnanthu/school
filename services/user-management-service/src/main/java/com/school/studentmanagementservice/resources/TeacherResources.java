@@ -43,8 +43,9 @@ public class TeacherResources {
     }
 
     @PostMapping("/teachers")
-    public ResponseEntity<String> insertStaff(@Valid @RequestBody CreateStaff createStaff) {
-        return ResponseEntity.ok(teachersService.insertStaff( createStaff));
+    public ResponseEntity<String> insertStaff(@Valid @RequestBody CreateStaff createStaff,
+                                              @RequestHeader String school) {
+        return ResponseEntity.ok(teachersService.insertStaff( createStaff,school));
     }
 
 }

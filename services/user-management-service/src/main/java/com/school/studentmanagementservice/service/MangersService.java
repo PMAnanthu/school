@@ -50,7 +50,7 @@ public class MangersService {
         return staff;
     }
 
-    public String insertStaff(CreateManger createStaff) {
+    public String insertManger(CreateManger createStaff,String school) {
         UserMapping userMapping = new UserMapping();
         try {
             userMapping.setUserType(createStaff.getUserType());
@@ -67,7 +67,7 @@ public class MangersService {
                 if (createLoginResponse != null) {
                     userMapping.setLogin(UUID.fromString(createLoginResponse));
                     userMapping.setUserId(staff.getUuid());
-                    userMapping.setSchool(UUID.fromString(createStaff.getSchool()));
+                    userMapping.setSchool(UUID.fromString(school));
                     iUserMappingRepo.save(userMapping);
                     return staff.getUuid().toString();
                 } else {

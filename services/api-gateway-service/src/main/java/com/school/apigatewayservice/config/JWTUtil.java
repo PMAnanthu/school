@@ -18,7 +18,7 @@ import java.util.function.Function;
 public class JWTUtil {
     private static final String SECRET_KEY ="test" ;
 
-    public String extractUserName(String token){
+    public String extractUserId(String token){
         return extractClaim(token, Claims::getSubject);
     }
 

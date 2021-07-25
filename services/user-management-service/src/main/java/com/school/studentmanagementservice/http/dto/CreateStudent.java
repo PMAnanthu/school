@@ -19,9 +19,6 @@ public class CreateStudent {
     @NotEmpty(message = "User name should not be empty")
     @NotNull(message = "User name should not be null")
     private String userName;
-    @NotEmpty(message = "School should not be empty")
-    @NotNull(message = "School should not be null")
-    private String school;
     @NotEmpty(message = "First name should not be empty")
     @NotNull(message = "First name should not be null")
     private String firstName;

@@ -42,8 +42,9 @@ public class MangersResources {
     }
 
     @PostMapping("/mangers")
-    public ResponseEntity<String> insertMangers(@Valid @RequestBody CreateManger createManger) {
-        return ResponseEntity.ok(mangersService.insertStaff(createManger));
+    public ResponseEntity<String> insertMangers(@Valid @RequestBody CreateManger createManger,
+                                                @RequestHeader String school) {
+        return ResponseEntity.ok(mangersService.insertManger(createManger,school));
     }
 
 }

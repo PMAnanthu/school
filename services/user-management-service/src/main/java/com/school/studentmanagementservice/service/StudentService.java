@@ -34,7 +34,7 @@ public class StudentService {
     private final IStudentRepo iStudentRepo;
     private final Utils utils;
 
-    public String insertStudent(CreateStudent createStudent) {
+    public String insertStudent(CreateStudent createStudent,String school) {
         UserMapping userMapping = new UserMapping();
         try {
             userMapping.setUserType(UserType.STUDENT);
@@ -52,7 +52,7 @@ public class StudentService {
                 if(createLoginResponse!=null){
                     userMapping.setLogin(UUID.fromString(createLoginResponse));
                     userMapping.setUserId(student.getUuid());
-                    userMapping.setSchool(UUID.fromString(createStudent.getSchool()));
+                    userMapping.setSchool(UUID.fromString(school));
                     iUserMappingRepo.save(userMapping);
                     return student.getUuid().toString();
                 }else {

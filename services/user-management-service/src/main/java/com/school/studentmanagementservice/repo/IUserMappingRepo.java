@@ -1,6 +1,5 @@
 package com.school.studentmanagementservice.repo;
 
-import com.school.studentmanagementservice.dto.Student;
 import com.school.studentmanagementservice.dto.UserMapping;
 import com.school.studentmanagementservice.dto.UserType;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +17,10 @@ public interface IUserMappingRepo extends CrudRepository<UserMapping, UUID> {
 
     @Query("FROM UserMapping WHERE  school=:school AND userType=:userType")
     List<UserMapping> findAllStudentBySchoolAndType(UUID school, UserType userType);
+
+    @Query("FROM UserMapping WHERE login=:login")
+    UserMapping findByLogin(UUID login);
+
+    @Query("FROM UserMapping WHERE userType=:userType")
+    List<UserMapping> findAllByUserType(UserType userType);
 }

@@ -40,8 +40,9 @@ public class StudentResources {
     }
 
     @PostMapping("/students")
-    public ResponseEntity<String> insertStudent(@Valid @RequestBody CreateStudent createStudent) {
-        return ResponseEntity.ok(studentService.insertStudent( createStudent));
+    public ResponseEntity<String> insertStudent(@Valid @RequestBody CreateStudent createStudent,
+                                                @RequestHeader String school) {
+        return ResponseEntity.ok(studentService.insertStudent( createStudent,school));
     }
 
 }
