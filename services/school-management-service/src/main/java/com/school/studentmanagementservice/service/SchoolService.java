@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Data
@@ -31,10 +32,8 @@ public class SchoolService {
 
 
     public School findSchool(UUID uuid) throws UserNotFountException {
-        School school = iSchoolRepo.findByUserId(uuid);
-        if (school == null)
-            throw new UserNotFountException("School Not Found with for ID " + uuid.toString());
-        return school;
+        Optional<School> school = iSchoolRepo.findById(uuid);
+        return school.orElseThrow(()->new UserNotFountException("School Not Found with for ID " + uuid.toString()));
     }
 
     public String insertSchool(CreateSchool createRequest) {
