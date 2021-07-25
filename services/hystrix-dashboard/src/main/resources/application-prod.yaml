@@ -10,11 +10,8 @@ hystrix:
     proxy-stream-allow-list: "*"
 
 eureka:
-  instance:
-    preferIpAddress: true
-    hostname: eureka-0
   client:
-    registerWithEureka: true
-    fetchRegistry: true
+    register-with-eureka: true
+    fetch-registry: false
     serviceUrl:
       defaultZone: http://naming-server:8761/eureka

@@ -56,6 +56,8 @@ public class ApiGatewayConfiguration<RouterValidator> {
                 .route(p -> p
                         .path("/sign-up")
                         .uri("lb://authentication-service/sign-up"))
+                .route(p -> p.path("/admin")
+                        .uri("lb://user-management-service/admin"))
                 .route(p -> p.path("/test")
                         .filters(f -> f.filter(filter))
                         .uri("lb://authentication-service/test"))
