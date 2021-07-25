@@ -17,3 +17,6 @@ cd ..
 cd user-management-service/
 ./gradlew clean build buildDocker pushDocker -i
 cd ..
+cd school-management-service/
+./gradlew clean build buildDocker pushDocker -i
+cd ..

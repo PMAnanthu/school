@@ -59,7 +59,7 @@ public class ParentService {
                     userMapping.setLogin(UUID.fromString(createLoginResponse));
                     userMapping.setUserId(parent.getUuid());
                     iUserMappingRepo.save(userMapping);
-                    return "Parent Created " + parent.getUuid();
+                    return parent.getUuid().toString();
                 } else {
                     parentRepo.delete(parent);
                 }

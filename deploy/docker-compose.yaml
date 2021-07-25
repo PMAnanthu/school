@@ -38,7 +38,7 @@ services:
             - naming-server
 
     api-gateway-service:
-        image: pmananthu/api-gateway-service:0.1.0
+        image: pmananthu/api-gateway-service:0.1.1
         ports:
             - "8765:8765"
         environment:
@@ -88,6 +88,19 @@ services:
             - naming-server
             - db
 
+    school-management-service:
+        image: pmananthu/school-management-service:0.0.1
+        ports:
+            - "8500:8500"
+        links:
+            - "db:db"
+        environment:
+            PROFILE: prod
+        networks:
+            - school-network
+        depends_on: 
+            - naming-server
+            - db
 
 networks:
     school-network:

@@ -69,7 +69,7 @@ public class MangersService {
                     userMapping.setUserId(staff.getUuid());
                     userMapping.setSchool(UUID.fromString(createStaff.getSchool()));
                     iUserMappingRepo.save(userMapping);
-                    return "Staff Created " + staff.getUuid();
+                    return staff.getUuid().toString();
                 } else {
                     iStaffRepo.delete(staff);
                 }

@@ -54,7 +54,7 @@ public class StudentService {
                     userMapping.setUserId(student.getUuid());
                     userMapping.setSchool(UUID.fromString(createStudent.getSchool()));
                     iUserMappingRepo.save(userMapping);
-                    return "Student Created "+student.getUuid();
+                    return student.getUuid().toString();
                 }else {
                     iStudentRepo.delete(student);
                 }

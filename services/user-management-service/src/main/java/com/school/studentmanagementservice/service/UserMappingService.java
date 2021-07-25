@@ -51,7 +51,6 @@ public class UserMappingService {
                     response.setMiddleName(parent.getMiddleName());
                     response.setLastName(parent.getLastName());
                     break;
-
             }
             return response;
         }
