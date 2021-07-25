@@ -1,11 +1,28 @@
-package com.school.studentmanagementservice.http.dto;
+/*
+Copyright @ 2021
+Project : skyhawks-core
+Written: ananthupm
+Date : 26/06/21
+*/
+package com.school.studentmanagementservice.dto;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
-public class CreateStudentRequest {
+@Getter
+@Setter
+@Entity
+@Table
+public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID uuid;
     private String firstName;
     private String lastName;
     private String middleName;
@@ -16,6 +33,7 @@ public class CreateStudentRequest {
     private String email;
     private String admissionFor;
     private LocalDate dateOfAdmission;
+    @Column(name = "admissionNumber", unique = true)
     private String admissionNumber;
     private String parent;
     private String castDetails;

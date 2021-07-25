@@ -6,16 +6,17 @@ Date : 26/06/21
 */
 package com.school.studentmanagementservice.resources;
 
+import com.school.studentmanagementservice.dto.Student;
+import com.school.studentmanagementservice.exception.UserNotFountException;
 import com.school.studentmanagementservice.http.dto.CreateStudent;
 import com.school.studentmanagementservice.service.StudentService;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.UUID;
 
 @Data
 @RestController
@@ -24,14 +25,23 @@ public class StudentResources {
     private final StudentService studentService;
 
     @GetMapping("/students")
-    public String insertStudent() {
-        return "Success";
+    public List<Student> getAllStudent() {
+        return studentService.findAll();
+    }
+
+    @GetMapping("/students/school/{school}")
+    public List<Student> getAllStudentBySchool(@PathVariable String  school) {
+        return studentService.findAllBySchool(UUID.fromString(school));
+    }
+
+    @GetMapping("/students/{uuid}")
+    public Student getStudent(@PathVariable String uuid) throws UserNotFountException {
+        return studentService.findStudent(UUID.fromString(uuid));
     }
 
     @PostMapping("/students")
     public ResponseEntity<String> insertStudent(@Valid @RequestBody CreateStudent createStudent) {
         return ResponseEntity.ok(studentService.insertStudent( createStudent));
-
     }
 
 }

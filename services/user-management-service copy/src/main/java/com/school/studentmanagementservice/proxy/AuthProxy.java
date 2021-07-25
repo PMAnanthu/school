@@ -5,8 +5,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name="authentication-service")
+@FeignClient(name = "authentication-service")
 public interface AuthProxy {
+
     @PostMapping("/sign-up")
     public String createLogin(@RequestBody CreateLoginRequest request);
 }
