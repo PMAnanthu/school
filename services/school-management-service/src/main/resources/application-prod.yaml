@@ -6,8 +6,8 @@ spring:
     name: school-management-service
   datasource:
     hikari:
-      connectionTimeout: 20000
-      maximumPoolSize: 5
+      connectionTimeout: 60000
+      maximumPoolSize: 10
     url: jdbc:postgresql://db:5432/dev_01
     username: postgresql
     password: Password

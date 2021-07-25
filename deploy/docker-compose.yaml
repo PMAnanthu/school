@@ -15,7 +15,12 @@ services:
         networks:
             - school-network
         volumes:
-            - "./data:/var/lib/postgresql/data/pgdata"
+            - ./../../data:/var/lib/postgresql/data/pgdata
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgresql"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
 
     naming-server:
         image: pmananthu/eureka-naming-server:0.1.0

@@ -11,18 +11,11 @@ services:
             POSTGRES_DB: dev_01
             POSTGRES_USER: postgresql
             POSTGRES_PASSWORD: Password
+            PGDATA: /var/lib/postgresql/data/pgdata
         networks:
             - school-network
-
-    naming-server:
-        image: pmananthu/eureka-naming-server:0.0.1
-        ports:
-            - "8761:8761"
-        environment:
-            PROFILE: prod
-        networks:
-            - school-network
-            
+        volumes:
+            - ./../../data:/var/lib/postgresql/data/pgdata
 
 networks:
     school-network:
