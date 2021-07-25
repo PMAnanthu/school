@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+
+    db:
+        image: postgres:latest
+        ports:
+            - "5432:5432"
+        restart: always
+        environment:
+            POSTGRES_DB: dev_01
+            POSTGRES_USER: postgresql
+            POSTGRES_PASSWORD: Password
+        networks:
+            - school-network
+
+    naming-server:
+        image: pmananthu/eureka-naming-server:0.0.1
+        ports:
+            - "8761:8761"
+        environment:
+            PROFILE: prod
+        networks:
+            - school-network
+            
+
+networks:
+    school-network:

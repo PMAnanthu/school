@@ -36,8 +36,9 @@ public class AuthenticationController {
     private final ApplicationConfiguration applicationConfiguration;
 
     @GetMapping(path = "/test")
-    public String test(){
-        return "Success";
+    public String test(@RequestHeader String userName){
+
+        return "Success -> "+userName;
     }
 
     @GetMapping(path = "/authored/test")
@@ -77,8 +78,9 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping(path = "/validate")
+    @GetMapping(path = "/validate")
     public TokenResponse validate(@Valid @RequestParam String token){
+        System.out.println("validate");
         return userService.validate(token);
     }
 

@@ -1,5 +1,5 @@
 server:
-  port: 8001
+  port: 8765
 
 spring:
   application:
@@ -10,34 +10,8 @@ spring:
         locator:
           enabled: true
           lowerCaseServiceId: true
-      routes:
-        - id: authentication-service
-          uri: lb://authentication-service
-          predicates:
-            - Path=/authentication-service/**
-
-        - id: user-management-service
-          uri: lb://user-management-service
-          predicates:
-            - Path=/user-management-service/**
-          filters:
-            - AuthFilter
-
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "http://localhost:3000"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
 
 eureka:
-  instance:
-    preferIpAddress: true
-    hostname: eureka-0
   client:
-    registerWithEureka: true
-    fetchRegistry: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
