@@ -21,11 +21,6 @@ springdoc:
 
 
 eureka:
-  instance:
-    preferIpAddress: true
-    hostname: eureka-0
   client:
-    registerWithEureka: true
-    fetchRegistry: true
     serviceUrl:
       defaultZone: http://naming-server:8761/eureka
