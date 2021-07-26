@@ -11,6 +11,7 @@ import com.school.studentmanagementservice.exception.UserNotFountException;
 import com.school.studentmanagementservice.http.dto.CreateSchool;
 import com.school.studentmanagementservice.service.SchoolService;
 import lombok.Data;
+import net.bytebuddy.implementation.bytecode.assign.TypeCasting;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +36,9 @@ public class SchoolResources {
     }
 
     @PostMapping("/schools")
-    public ResponseEntity<String> insertSchool(@Valid @RequestBody CreateSchool create) {
-        return ResponseEntity.ok(schoolService.insertSchool( create));
+    public ResponseEntity<String> insertSchool(@Valid @RequestBody CreateSchool create,
+                                               @RequestHeader String userId) {
+        return ResponseEntity.ok(schoolService.insertSchool(create,userId));
     }
 
 }

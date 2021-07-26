@@ -1,6 +1,7 @@
 package com.school.user.service;
 
 import com.school.user.dto.*;
+import com.school.user.http.dto.AdminResponse;
 import com.school.user.http.dto.CreateLoginRequest;
 import com.school.user.http.dto.UserResponse;
 import com.school.user.proxy.AuthProxy;
@@ -9,9 +10,11 @@ import com.school.user.repo.IStaffRepo;
 import com.school.user.repo.IStudentRepo;
 import com.school.user.repo.IUserMappingRepo;
 import lombok.Data;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Data
@@ -64,25 +67,36 @@ public class UserMappingService {
        return iUserMappingRepo.findByLogin(UUID.fromString(userId));
     }
 
-    public void addAdmin() {
-        List<UserMapping> userMappings=iUserMappingRepo.findAllByUserType(UserType.SYS_ADMIN);
-        if(userMappings.size()==0){
-            UserMapping userMapping = new UserMapping();
-            try {
-                userMapping.setUserType(UserType.SYS_ADMIN);
-                CreateLoginRequest createLoginRequestRequest = new CreateLoginRequest();
-                createLoginRequestRequest.setEmail("skyhawks.app@gmail.com");
-                createLoginRequestRequest.setName("SYS Admin");
-                createLoginRequestRequest.setUserName("sysadmin");
-                createLoginRequestRequest.setPassword(utils.randomChar(8));
-                String createLoginResponse = authProxy.createLogin(createLoginRequestRequest);
-                if (createLoginResponse != null) {
-                    userMapping.setLogin(UUID.fromString(createLoginResponse));
-                    iUserMappingRepo.save(userMapping);
-                }
-            } catch (Exception e) {
-                throw e;
+    public AdminResponse addAdmin() {
+        AdminResponse adminResponse=new AdminResponse();
+        UserMapping userMapping = new UserMapping();
+        try {
+            adminResponse.setUserName(utils.randomChar(8));
+            adminResponse.setPassword(utils.randomChar(8));
+            userMapping.setUserType(UserType.SYS_ADMIN);
+            CreateLoginRequest createLoginRequestRequest = new CreateLoginRequest();
+            createLoginRequestRequest.setEmail("skyhawks.app@gmail.com");
+            createLoginRequestRequest.setName("sysadmin");
+            createLoginRequestRequest.setUserName(adminResponse.getUserName());
+            createLoginRequestRequest.setPassword(adminResponse.getPassword());
+            String createLoginResponse = authProxy.createLogin(createLoginRequestRequest);
+            if (createLoginResponse != null) {
+                userMapping.setLogin(UUID.fromString(createLoginResponse));
+                userMapping.setLogin(UUID.fromString(createLoginResponse));
+                adminResponse.setToken(iUserMappingRepo.save(userMapping).getUuid().toString());
             }
+        } catch (Exception e) {
+            throw e;
+        }
+        return adminResponse;
+    }
+
+    public void deleteAdmin(String token) {
+        Optional<UserMapping> mapping = iUserMappingRepo.findById(UUID.fromString(token));
+        if(mapping.isPresent()){
+            UserMapping userMapping = mapping.get();
+            authProxy.deleteLogin(userMapping.getLogin().toString());
+            iUserMappingRepo.delete(userMapping);
         }
     }
 }

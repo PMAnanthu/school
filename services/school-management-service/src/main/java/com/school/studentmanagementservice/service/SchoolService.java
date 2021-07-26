@@ -10,10 +10,7 @@ import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @Service
@@ -36,13 +33,13 @@ public class SchoolService {
         return school.orElseThrow(()->new UserNotFountException("School Not Found with for ID " + uuid.toString()));
     }
 
-    public String insertSchool(CreateSchool createRequest) {
+    public String insertSchool(CreateSchool createRequest,String userId) {
         try {
             School school = iSchoolRepo.save(modelMapper.map(createRequest, School.class));
             if (school != null) {
                 CreateManger createManger=createRequest.getManger();
                 createManger.setSchool(school.getUuid().toString());
-                String mangerID=serviceProxy.createUser(createManger);
+                String mangerID=serviceProxy.createUser(createManger,school.getUuid().toString());
                 if(mangerID!=null && !mangerID.isEmpty()) {
                     return school.getUuid().toString();
                 }else {

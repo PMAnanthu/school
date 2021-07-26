@@ -1,8 +1,10 @@
 package com.school.user.resources;
 
+import com.school.user.http.dto.AdminResponse;
 import com.school.user.http.dto.UserResponse;
 import com.school.user.service.UserMappingService;
 import lombok.Data;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +20,13 @@ public class UserResource {
         return userMappingService.findUser(userId);
     }
 
-    @GetMapping("/admin")
-    public void createAdmin(@PathVariable String userId){
-         userMappingService.addAdmin();
+    @GetMapping("/admin/create")
+    public AdminResponse createAdmin(){
+         return userMappingService.addAdmin();
+    }
+
+    @DeleteMapping("/admin/{token}")
+    public void DeleteAdmin(@PathVariable String token){
+         userMappingService.deleteAdmin(token);
     }
 }

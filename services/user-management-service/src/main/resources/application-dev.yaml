@@ -4,12 +4,14 @@ server:
 spring:
   application:
     name: user-management-service
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.xml
   datasource:
     hikari:
       connectionTimeout: 20000
       maximumPoolSize: 5
     url: jdbc:postgresql://localhost:5432/dev_01
-    username: ananthupm
+    username: postgresql
     password: Password
   jpa:
     hibernate:

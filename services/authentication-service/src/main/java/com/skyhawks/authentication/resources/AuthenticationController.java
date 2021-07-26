@@ -61,6 +61,12 @@ public class AuthenticationController {
         return ResponseEntity.ok(loginUser.getUuid().toString());
     }
 
+    @DeleteMapping(path = "/sign-out/{id}")
+    public void deleteUser(@PathVariable String id){
+         userService.deleteUser(id);
+    }
+
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody AuthenticationRequest request) {
         final LoginUser userDetails = userService.findByUsername(request.getUserName());

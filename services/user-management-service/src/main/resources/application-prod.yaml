@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: user-management-service
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.xml
   datasource:
     hikari:
       connectionTimeout: 60000
@@ -13,7 +15,7 @@ spring:
     password: Password
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
 
 springdoc:
   swagger-ui:
@@ -23,6 +25,6 @@ springdoc:
 eureka:
   client:
     register-with-eureka: true
-    fetch-registry: false
+    fetch-registry: true
     serviceUrl:
       defaultZone: http://naming-server:8761/eureka
