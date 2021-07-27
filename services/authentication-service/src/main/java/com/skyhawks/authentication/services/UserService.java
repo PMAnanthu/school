@@ -24,7 +24,6 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    private static final String MAIL_SEND_UPDATE_USER = "/mail/send/update-user";
     private final IUserRepo iUserRepo;
 
     private final BCryptPasswordEncoder passwordEncoder;

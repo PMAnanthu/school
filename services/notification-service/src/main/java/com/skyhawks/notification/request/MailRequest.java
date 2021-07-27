@@ -13,13 +13,11 @@ public class MailRequest {
     @Email(message = "To address should be proper mail address")
     private String to;
 
-    private String name;
+    @NotNull(message = "Subject should not be null")
+    @NotEmpty(message = "Subject should not be empty")
+    private String subject;
 
-    @NotNull(message = "Username should not be null")
-    @NotEmpty(message = "Username should not be empty")
-    private String userName;
-
-    @NotNull(message = "Password should not be null")
-    @NotEmpty(message = "Password should not be empty")
-    private String password;
+    @NotNull(message = "Body should not be null")
+    @NotEmpty(message = "Body should not be empty")
+    private String body;
 }

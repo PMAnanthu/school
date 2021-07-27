@@ -3,7 +3,7 @@
 --changeset author:ananthupm:1
 DROP TABLE IF EXISTS login_user;
 
-CREATE TABLE IF NOT EXISTS public.login_user
+CREATE TABLE IF NOT EXISTS login_user
 (
     uuid uuid NOT NULL,
     account_non_expired boolean,

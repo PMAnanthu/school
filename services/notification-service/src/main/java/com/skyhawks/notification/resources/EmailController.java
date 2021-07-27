@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 @Data
 @RestController
-@RequestMapping("/mail")
+@RequestMapping("/mails")
 public class EmailController {
 
     private final EmailService emailService;
@@ -25,13 +25,9 @@ public class EmailController {
         return "Success";
     }
 
-    @PostMapping(path = "/send/create-user")
+    @PostMapping(path = "/send")
     public void sendCreateUserMail(@Valid @RequestBody MailRequest request){
         emailService.sendCreateUserMail(request);
     }
 
-    @PostMapping(path = "/send/update-user")
-    public void sendUpdateUserMail(@Valid @RequestBody MailRequest request){
-        emailService.sendUpdateUserMail(request);
-    }
 }

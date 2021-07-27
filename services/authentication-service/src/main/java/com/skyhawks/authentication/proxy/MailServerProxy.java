@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name="notification-service")
 public interface MailServerProxy {
-    @PostMapping("/mail/send/create-user")
+    @PostMapping("/mails/send")
     void sendMail(@RequestBody SendCreateMailRequest mailRequest);
 }

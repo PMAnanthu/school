@@ -19,4 +19,6 @@ public class CreateUserRequest {
     @NotNull
     @NotEmpty
     private String name;
+
+    private String schoolName;
 }

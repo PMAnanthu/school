@@ -5,17 +5,116 @@ services:
     db:
         image: postgres:latest
         ports:
-            - "5432:5432"
+            - 5432:5432
         restart: always
+        networks:
+            - school-network
         environment:
-            POSTGRES_DB: dev_01
+            POSTGRES_DB: postgresql
             POSTGRES_USER: postgresql
             POSTGRES_PASSWORD: Password
             PGDATA: /var/lib/postgresql/data/pgdata
+        volumes: 
+            - ./../../data/login:/var/lib/postgresql/data/pgdata
+        healthcheck:
+            test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    zipkin:
+        image: openzipkin/zipkin:2.23
+        restart: always
         networks:
             - school-network
-        volumes:
-            - ./../../data:/var/lib/postgresql/data/pgdata
+        ports: 
+            - 9411:9411
 
+    naming-server:
+        image: pmananthu/eureka-naming-server:0.1.0
+        ports:
+            - 8761:8761
+        links:
+            - zipkin
+        networks:
+            - school-network
+        restart: always
+        environment:
+            PROFILE: prod
+
+    api-gateway-service:
+        image: pmananthu/api-gateway-service:0.1.1 
+        restart: always
+        networks:
+            - school-network
+        ports:
+            - 8765:8765
+        links: 
+            - zipkin
+            - naming-server:naming-server
+        environment:
+            PROFILE: prod
+        depends_on: 
+            naming-server:
+                condition: service_healthy
+
+    # authentication-service:
+    #     image: pmananthu/authentication-service:0.1.0
+    #     restart: always
+    #     ports:
+    #         - 8100:8100
+    #     links:
+    #         - naming-server:naming-server
+    #         - db:db
+    #     environment:
+    #         PROFILE: prod
+    #     networks:
+    #         - school-network
+    #     depends_on: 
+    #         db:
+    #             condition: service_healthy
+    #         naming-server:
+    #             condition: service_healthy
+    #         api-gateway-service:
+    #             condition: service_healthy
+
+    # user-management-service:
+    #     image: pmananthu/user-management-service:0.1.0
+    #     restart: always
+    #     ports:
+    #         - 8400:8400
+    #     links:
+    #         - naming-server:naming-server
+    #         - db:db
+    #     environment:
+    #         PROFILE: prod
+    #     networks:
+    #         - school-network
+    #     depends_on: 
+    #         db:
+    #             condition: service_healthy
+    #         naming-server:
+    #             condition: service_healthy
+    #         authentication-service:
+    #             condition: service_healthy
+            
+    notification-service:
+        image: pmananthu/notification-service:0.1.0
+        restart: always
+        networks:
+            - school-network
+        ports:
+            - 8200:8200
+            - 587:587
+        environment:
+            PROFILE: prod
+        links:
+            - zipkin
+            - naming-server:naming-server
+        depends_on: 
+            naming-server:
+                condition: service_healthy
+ 
+ 
 networks:
     school-network:

@@ -8,6 +8,7 @@ package com.skyhawks.authentication.resources;
 
 import com.skyhawks.authentication.config.ApplicationConfiguration;
 import com.skyhawks.authentication.config.jwt.JWTUtil;
+import com.skyhawks.authentication.exception.MailServiceDownException;
 import com.skyhawks.authentication.model.LoginUser;
 import com.skyhawks.authentication.proxy.MailServerProxy;
 import com.skyhawks.authentication.request.*;
@@ -48,17 +49,23 @@ public class AuthenticationController {
 
 
     @PostMapping(path = "/sign-up")
-    public ResponseEntity<String> createUser(@Valid @RequestBody CreateUserRequest request){
+    public String createUser(@Valid @RequestBody CreateUserRequest request) throws MailServiceDownException {
         LoginUser loginUser= userService.saveUser(request);
         if(loginUser!=null && loginUser.getUuid()!=null){
-            SendCreateMailRequest mailRequest = new SendCreateMailRequest();
-            mailRequest.setName(request.getName());
-            mailRequest.setTo(request.getEmail());
-            mailRequest.setPassword(loginUser.getPassword());
-            mailRequest.setUserName(loginUser.getUserName());
-            mailServerProxy.sendMail(mailRequest);
+            try {
+                SendCreateMailRequest mailRequest = new SendCreateMailRequest();
+                mailRequest.setSubject("Welcome to skyhawks");
+                mailRequest.setTo(request.getEmail());
+                mailRequest.setBody(String.format("Hi %s,\n Welcome to skyhawks %s \n Please find you login details.\n " +
+                                "Username:\t%s \nPassword:\t%s\n\nThanks and Regards.",
+                        request.getName(), request.getSchoolName(), loginUser.getUserName(), loginUser.getPassword()));
+                mailServerProxy.sendMail(mailRequest);
+            }catch (Exception e){
+                userService.deleteUser(loginUser.getUuid().toString());
+                throw  new MailServiceDownException(e);
+            }
         }
-        return ResponseEntity.ok(loginUser.getUuid().toString());
+        return loginUser.getUuid().toString();
     }
 
     @DeleteMapping(path = "/sign-out/{id}")

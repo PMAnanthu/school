@@ -21,6 +21,9 @@ spring:
           writetimeout: 10000
           starttls:
             enable: true
+  sleuth:
+    sampler:
+      probability: 1.0
 
 springdoc:
   swagger-ui:

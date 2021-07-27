@@ -21,6 +21,11 @@ spring:
           writetimeout: 10000
           starttls:
             enable: true
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    base-url: http://zipkin:9411/
 
 springdoc:
   swagger-ui:
@@ -28,8 +33,6 @@ springdoc:
 
 eureka:
   client:
-    register-with-eureka: true
-    fetch-registry: true
     serviceUrl:
       defaultZone: http://naming-server:8761/eureka
 

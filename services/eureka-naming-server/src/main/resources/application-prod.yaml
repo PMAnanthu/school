@@ -7,6 +7,7 @@ server:
 
 eureka:
   client:
+    peer-node-read-timeout-ms: 30s
     register-with-eureka: false
     fetch-registry: false
 
