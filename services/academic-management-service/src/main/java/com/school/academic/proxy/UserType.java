@@ -1,4 +1,4 @@
-package com.school.user.dto;
+package com.school.academic.proxy;
 
 public enum UserType {
     STUDENT,

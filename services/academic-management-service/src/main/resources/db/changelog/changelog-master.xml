@@ -7,9 +7,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <include file="/db/changelog/release-1.0/create-student.sql"/>
-    <include file="/db/changelog/release-1.0/create-parent.sql"/>
-    <include file="/db/changelog/release-1.0/create-staff.sql"/>
-    <include file="/db/changelog/release-1.0/create-user-mapping.sql"/>
-    <include file="/db/changelog/release-1.0/create-school.sql"/>
+    <include file="/db/changelog/release-1.0/create-division.sql"/>
+    <include file="/db/changelog/release-1.0/create-division_students.sql"/>
+    <include file="/db/changelog/release-1.0/create-exam.sql"/>
+    <include file="/db/changelog/release-1.0/create-score.sql"/>
 </databaseChangeLog>

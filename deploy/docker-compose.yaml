@@ -99,6 +99,29 @@ services:
             authentication-service:
                 condition: service_healthy
             
+    academic-management-service:
+        image: pmananthu/academic-management-service:0.1.0
+        restart: always
+        ports:
+            - 8500:8500
+        links:
+            - zipkin
+            - naming-server:naming-server
+            - db:db
+        environment:
+            PROFILE: prod
+        networks:
+            - school-network
+        depends_on: 
+            db:
+                condition: service_healthy
+            naming-server:
+                condition: service_healthy
+            authentication-service:
+                condition: service_healthy
+            user-management-service:
+                condition: service_healthy
+                
     notification-service:
         image: pmananthu/notification-service:0.1.0
         restart: always

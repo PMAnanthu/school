@@ -1,9 +1,9 @@
 server:
-  port: 8400
+  port: 8500
 
 spring:
   application:
-    name: user-management-service
+    name: academic-management-service
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
   datasource:
@@ -11,7 +11,7 @@ spring:
       connectionTimeout: 20000
       maximumPoolSize: 1
     url: jdbc:postgresql://localhost:5432/dev_01
-    username: postgresql
+    username: ananthupm
     password: Password
   jpa:
     hibernate:

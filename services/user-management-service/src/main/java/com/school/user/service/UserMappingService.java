@@ -106,4 +106,17 @@ public class UserMappingService {
             throw new AdminDeleteException(e);
         }
     }
+
+
+    public UserType checkUserType(String user, String type) {
+        UserMapping mapping=null;
+        if("userId".equalsIgnoreCase(type))
+         mapping = iUserMappingRepo.findByUserId(UUID.fromString(user));
+        if("loginId".equalsIgnoreCase(type))
+            mapping = iUserMappingRepo.findByLogin(UUID.fromString(user));
+        if (mapping!=null) {
+            return mapping.getUserType();
+        }
+        return UserType.NONE;
+    }
 }

@@ -1,5 +1,6 @@
 package com.school.user.resources;
 
+import com.school.user.dto.UserType;
 import com.school.user.exception.AdminCreateException;
 import com.school.user.exception.AdminDeleteException;
 import com.school.user.http.dto.AdminResponse;
@@ -27,5 +28,11 @@ public class UserResource {
     @DeleteMapping("/admin/{token}")
     public void DeleteAdmin(@PathVariable String token) throws AdminDeleteException {
          userMappingService.deleteAdmin(token);
+    }
+
+
+    @GetMapping("/users/{user}/type/by/{type}")
+    public UserType checkUserType(@PathVariable String user, @PathVariable String type){
+        return userMappingService.checkUserType(user,type);
     }
 }

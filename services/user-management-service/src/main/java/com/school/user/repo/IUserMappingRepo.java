@@ -18,4 +18,6 @@ public interface IUserMappingRepo extends CrudRepository<UserMapping, UUID> {
     @Query("FROM UserMapping WHERE login=:login")
     UserMapping findByLogin(UUID login);
 
+    @Query("FROM UserMapping WHERE userId=:userId")
+    UserMapping findByUserId(UUID userId);
 }
